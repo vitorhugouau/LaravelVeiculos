@@ -8,12 +8,12 @@ use App\Http\Controllers\Admin\ModelController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [VehicleController::class, 'index'])->name('vehicles.index');
 Route::get('/vehicle/{id}', [VehicleController::class, 'show'])->name('vehicle.show');
 
-// Auth::routes();
+Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
