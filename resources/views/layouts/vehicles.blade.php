@@ -76,6 +76,44 @@
             background: #2563eb;
         }
 
+        .nav-admin {
+            background: #10b981;
+            color: #ffffff !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .nav-admin:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .nav-user-name {
+            color: #475569;
+            font-weight: 600;
+            padding: 8px 12px;
+        }
+
+        .nav-logout {
+            background: #ef4444;
+            color: #ffffff !important;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-logout:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
         .hero-section {
             position: relative;
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
@@ -551,11 +589,24 @@
 
         @media (max-width: 768px) {
             .nav-links {
-                gap: 16px;
+                gap: 12px;
+                flex-wrap: wrap;
             }
 
             .nav-logo h2 {
                 font-size: 1.25rem;
+            }
+
+            .nav-admin,
+            .nav-login,
+            .nav-logout {
+                padding: 6px 16px;
+                font-size: 0.875rem;
+            }
+
+            .nav-user-name {
+                font-size: 0.875rem;
+                padding: 6px 8px;
             }
 
             .hero-section {

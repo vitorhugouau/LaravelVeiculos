@@ -16,13 +16,13 @@ class CarModel extends Model
         'brand_id'
     ];
 
-    public function branc()
+    public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
 
     public function vehicles()
-    {
-        return $this->hasMany(Vehicle::class);
-    }
+{
+    return $this->hasMany(Vehicle::class, 'model_id');
+}
 }
