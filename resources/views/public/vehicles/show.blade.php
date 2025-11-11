@@ -2,6 +2,17 @@
 
 @section('title', $vehicle->brand->name . ' ' . $vehicle->model->name . ' - AutoVendas')
 
+@section('hero')
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-car-side"></i> {{ $vehicle->brand->name }} {{ $vehicle->model->name }}
+            </h1>
+            <p class="hero-subtitle">{{ $vehicle->year }} • {{ number_format($vehicle->mileage, 0, ',', '.') }} km • {{ $vehicle->color->colors }}</p>
+        </div>
+    </div>
+@endsection
+
 @section('content')
     <div class="vehicle-details-page">
         <div class="container">
@@ -179,378 +190,503 @@
 @endsection
 
 @section('styles')
-    <style>
-        .vehicle-details-page {
-            background: #f8fafc;
-            padding: 32px 0 64px;
-        }
+  <style>
+    .vehicle-details-page {
+        background: var(--bg-darker);
+        padding: 0 0 80px;
+        min-height: 100vh;
+    }
 
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-            font-size: 0.875rem;
-        }
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+        font-size: 0.875rem;
+    }
 
-        .breadcrumb a {
-            color: #64748b;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+    .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.3s;
+        font-weight: 500;
+    }
 
-        .breadcrumb a:hover {
-            color: #3b82f6;
-        }
+    .breadcrumb a:hover {
+        color: var(--primary);
+    }
 
-        .breadcrumb span:not(:last-child) {
-            color: #cbd5e1;
-        }
+    .breadcrumb span:not(:last-child) {
+        color: var(--border-medium);
+    }
 
-        .breadcrumb span:last-child {
-            color: #1e293b;
-            font-weight: 600;
-        }
+    .breadcrumb span:last-child {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
 
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+    }
+
+    .images-section {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+
+    .main-image {
+        position: relative;
+        width: 100%;
+        height: 550px;
+        background: var(--bg-card);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px var(--shadow-lg);
+        margin-bottom: 20px;
+        border: 2px solid var(--border-subtle);
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s;
+    }
+
+    .main-image:hover img {
+        transform: scale(1.05);
+    }
+
+    .favorite-btn-large {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        background: rgba(26, 26, 36, 0.95);
+        backdrop-filter: blur(10px);
+        border: 2px solid var(--border-medium);
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 8px 24px var(--shadow-md);
+        z-index: 10;
+    }
+
+    .favorite-btn-large:hover {
+        background: var(--bg-elevated);
+        transform: scale(1.15) rotate(10deg);
+        border-color: var(--danger);
+        box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4);
+    }
+
+    .favorite-btn-large svg {
+        color: var(--text-muted);
+        width: 28px;
+        height: 28px;
+    }
+
+    .favorite-btn-large:hover svg {
+        color: var(--danger);
+    }
+
+    .thumbnail-gallery {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar-track {
+        background: var(--bg-elevated);
+        border-radius: 10px;
+    }
+
+    .thumbnail-gallery::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 10px;
+    }
+
+    .thumbnail {
+        flex-shrink: 0;
+        width: 120px;
+        height: 90px;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 3px solid var(--border-subtle);
+        transition: all 0.3s;
+        background: var(--bg-elevated);
+    }
+
+    .thumbnail.active {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px var(--glow-primary);
+    }
+
+    .thumbnail:hover {
+        border-color: var(--primary-light);
+        transform: translateY(-4px);
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .info-section {
+        background: var(--bg-card);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px var(--shadow-lg);
+        border: 2px solid var(--border-subtle);
+    }
+
+    .vehicle-badge-detail {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--accent) 0%, #0d9488 100%);
+        color: #ffffff;
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 16px var(--glow-accent);
+    }
+
+    .vehicle-title-detail {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        line-height: 1.2;
+        letter-spacing: -1px;
+    }
+
+    .vehicle-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-bottom: 36px;
+        font-weight: 500;
+    }
+
+    .price-section-detail {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+        padding: 28px;
+        border-radius: 16px;
+        margin-bottom: 36px;
+        border: 2px solid rgba(99, 102, 241, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .price-section-detail::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+
+    .price-label-detail {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .price-value-detail {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+        line-height: 1;
+        letter-spacing: -2px;
+        filter: drop-shadow(0 0 12px var(--glow-primary));
+    }
+
+    .price-installment {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .quick-specs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 36px;
+    }
+
+    .spec-box {
+        display: flex;
+        gap: 14px;
+        padding: 20px;
+        background: var(--bg-elevated);
+        border-radius: 14px;
+        border: 2px solid var(--border-medium);
+        transition: all 0.3s;
+    }
+
+    .spec-box:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px var(--glow-primary);
+        transform: translateY(-4px);
+    }
+
+    .spec-box svg {
+        color: var(--primary);
+        flex-shrink: 0;
+        filter: drop-shadow(0 0 8px var(--glow-primary));
+    }
+
+    .spec-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .spec-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 14px;
+    }
+
+    .btn-whatsapp,
+    .btn-contact {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 18px 28px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        border: none;
+    }
+
+    .btn-whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-whatsapp:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5);
+    }
+
+    .btn-contact {
+        background: var(--bg-elevated);
+        color: var(--text-primary);
+        border: 2px solid var(--border-medium);
+    }
+
+    .btn-contact:hover {
+        background: var(--bg-hover);
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: 0 0 20px var(--glow-primary);
+    }
+
+    .description-section,
+    .additional-info {
+        background: var(--bg-card);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px var(--shadow-lg);
+        margin-bottom: 36px;
+        border: 2px solid var(--border-subtle);
+    }
+
+    .section-title-detail {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 28px;
+        letter-spacing: -1px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-title-detail::before {
+        content: '';
+        width: 4px;
+        height: 36px;
+        background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        border-radius: 4px;
+        box-shadow: 0 0 12px var(--glow-primary);
+    }
+
+    .description-content {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        font-weight: 400;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        border: 2px solid var(--border-medium);
+        transition: all 0.3s;
+    }
+
+    .info-item:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 16px var(--glow-primary);
+        transform: translateY(-2px);
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .info-value {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 1rem;
+    }
+
+    .back-button-container {
+        text-align: center;
+        margin-top: 48px;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: var(--bg-elevated);
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+        transition: all 0.3s;
+        border: 2px solid var(--border-medium);
+        font-size: 1rem;
+    }
+
+    .btn-back:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+        border-color: var(--primary);
+        transform: translateX(-6px);
+        box-shadow: 0 0 20px var(--glow-primary);
+    }
+
+    .btn-back svg {
+        transition: transform 0.3s;
+    }
+
+    .btn-back:hover svg {
+        transform: translateX(-4px);
+    }
+
+    @media (max-width: 1200px) {
         .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
+            grid-template-columns: 1fr;
+            gap: 36px;
         }
 
         .images-section {
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-
-        .main-image {
             position: relative;
-            width: 100%;
-            height: 500px;
-            background: #ffffff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
+            top: 0;
         }
+    }
 
-        .main-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .favorite-btn-large {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .favorite-btn-large:hover {
-            background: #ffffff;
-            transform: scale(1.1);
-        }
-
-        .favorite-btn-large svg {
-            color: #64748b;
-        }
-
-        .favorite-btn-large:hover svg {
-            color: #ef4444;
-        }
-
-        .thumbnail-gallery {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-        }
-
-        .thumbnail {
-            flex-shrink: 0;
-            width: 100px;
-            height: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .thumbnail.active {
-            border-color: #3b82f6;
-        }
-
-        .thumbnail:hover {
-            border-color: #93c5fd;
-        }
-
-        .thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .info-section {
-            background: #ffffff;
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .vehicle-badge-detail {
-            display: inline-block;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
+    @media (max-width: 768px) {
         .vehicle-title-detail {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .vehicle-subtitle {
-            font-size: 1.125rem;
-            color: #64748b;
-            margin-bottom: 32px;
-        }
-
-        .price-section-detail {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 32px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .price-label-detail {
-            font-size: 0.875rem;
-            color: #64748b;
-            margin-bottom: 8px;
-            font-weight: 500;
+            font-size: 2.2rem;
         }
 
         .price-value-detail {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 4px;
-            line-height: 1;
-        }
-
-        .price-installment {
-            font-size: 1rem;
-            color: #64748b;
+            font-size: 2.5rem;
         }
 
         .quick-specs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .spec-box {
-            display: flex;
-            gap: 12px;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .spec-box svg {
-            color: #3b82f6;
-            flex-shrink: 0;
-        }
-
-        .spec-label {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .spec-value {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1e293b;
+            grid-template-columns: 1fr;
         }
 
         .cta-buttons {
-            display: flex;
-            gap: 12px;
+            flex-direction: column;
         }
 
-        .btn-whatsapp,
-        .btn-contact {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 16px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            border: none;
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: #ffffff;
-        }
-
-        .btn-whatsapp:hover {
-            background: #20BA5A;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-contact {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-
-        .btn-contact:hover {
-            background: #e2e8f0;
-            transform: translateY(-2px);
-        }
-
-        .description-section,
-        .additional-info {
-            background: #ffffff;
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 32px;
-        }
-
-        .section-title-detail {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 24px;
-        }
-
-        .description-content {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: #475569;
+        .main-image {
+            height: 380px;
         }
 
         .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            grid-template-columns: 1fr;
         }
 
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
+        .info-section,
+        .description-section,
+        .additional-info {
+            padding: 28px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .vehicle-title-detail {
+            font-size: 1.8rem;
         }
 
-        .info-label {
-            font-weight: 600;
-            color: #64748b;
+        .price-value-detail {
+            font-size: 2rem;
         }
 
-        .info-value {
-            font-weight: 700;
-            color: #1e293b;
+        .main-image {
+            height: 300px;
         }
-
-        .back-button-container {
-            text-align: center;
-        }
-
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: #f1f5f9;
-            color: #475569;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .btn-back:hover {
-            background: #e2e8f0;
-            color: #1e293b;
-            transform: translateX(-4px);
-        }
-
-        @media (max-width: 1024px) {
-            .details-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .images-section {
-                position: relative;
-                top: 0;
-            }
-
-            .quick-specs {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .vehicle-title-detail {
-                font-size: 2rem;
-            }
-
-            .price-value-detail {
-                font-size: 2.25rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .main-image {
-                height: 350px;
-            }
-        }
-    </style>
+    }
+</style>
 @endsection
 
 @section('scripts')
