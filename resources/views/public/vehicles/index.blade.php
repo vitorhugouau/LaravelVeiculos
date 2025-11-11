@@ -6,9 +6,8 @@
     <div class="hero-section">
         <div class="hero-content">
             <h1 class="hero-title">Encontre o Carro dos Seus Sonhos</h1>
-            <p class="hero-subtitle">Veículos selecionados com qualidade e procedência garantida</p>
+            <p class="hero-subtitle">Milhares de veículos novos e seminovos com as melhores condições. Encontre o carro ideal para você.</p>
         </div>
-        <div class="hero-gradient"></div>
     </div>
 @endsection
 
