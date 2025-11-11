@@ -16,9 +16,9 @@
 
     <style>
         :root {
-            --primary: #FF6B00;
-            --primary-dark: #E55D00;
-            --primary-light: #FF8533;
+            --primary: #e90909ff;
+            --primary-dark: #ff0b02ff;
+            --primary-light: #ff3333ff;
             --secondary: #1E293B;
             --accent: #10b981;
             --danger: #ef4444;
