@@ -185,6 +185,18 @@ Armazena os usuários do sistema.
 | is_admin | boolean | Se é administrador |
 | timestamps | timestamps | created_at, updated_at |
 
+#### **login**
+
+# Usúario Comum
+
+usuário = test@example.com 
+senha = password
+
+# Admin 
+
+usuário = admin@example.com
+senha = password
+
 #### **brands**
 Armazena as marcas de veículos.
 
