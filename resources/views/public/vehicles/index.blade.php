@@ -5,10 +5,11 @@
 @section('hero')
     <div class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">Encontre o Carro dos Seus Sonhos</h1>
-            <p class="hero-subtitle">Veículos selecionados com qualidade e procedência garantida</p>
+            <h1 class="hero-title">
+                <i class="fas fa-car-side"></i> Encontre o Carro dos Seus Sonhos
+            </h1>
+            <p class="hero-subtitle">Milhares de veículos novos e seminovos com as melhores condições. Encontre o carro ideal para você.</p>
         </div>
-        <div class="hero-gradient"></div>
     </div>
 @endsection
 
@@ -74,16 +75,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="filter-btn">Filtrar</button>
+            <button type="submit" class="filter-btn">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
 
             @if(request()->hasAny(['brand_id', 'year', 'min_price', 'max_price']))
                 <a href="{{ route('vehicles.index') }}" class="clear-filters">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                    Limpar
+                    <i class="fas fa-times-circle"></i> Limpar Filtros
                 </a>
             @endif
         </form>
@@ -93,26 +91,29 @@
 @section('content')
     <div class="container">
         <div class="vehicles-header">
-            <h2 class="section-title">Veículos Disponíveis</h2>
-            <p class="results-count">{{ count($vehicles) }} veículo{{ count($vehicles) != 1 ? 's' : '' }}
-                encontrado{{ count($vehicles) != 1 ? 's' : '' }}</p>
+            <h2 class="section-title">
+                <i class="fas fa-car"></i> Veículos Disponíveis
+            </h2>
+            <p class="results-count">
+                <i class="fas fa-search"></i>
+                {{ count($vehicles) }} veículo{{ count($vehicles) != 1 ? 's' : '' }}
+                encontrado{{ count($vehicles) != 1 ? 's' : '' }}
+            </p>
         </div>
 
         <div class="vehicles-grid">
             @foreach($vehicles as $vehicle)
                 <div class="vehicle-card">
-                    <div class="vehicle-badge">Em destaque</div>
+                    <div class="vehicle-badge">
+                        <i class="fas fa-star"></i> Em destaque
+                    </div>
 
                     <div class="vehicle-image-wrapper">
                         <img src="{{ $vehicle->photo }}" alt="{{ $vehicle->brand->name }} {{ $vehicle->model->name }}"
                             class="vehicle-image">
                         <div class="image-overlay">
-                            <button class="favorite-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path
-                                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                                </svg>
+                            <button class="favorite-btn" title="Favoritar">
+                                <i class="fas fa-heart"></i>
                             </button>
                         </div>
                     </div>
@@ -125,33 +126,29 @@
 
                         <div class="vehicle-specs">
                             <div class="spec-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 2v20M2 12h20" />
-                                </svg>
+                                <i class="fas fa-tachometer-alt"></i>
                                 <span>{{ number_format($vehicle->mileage, 0, ',', '.') }} km</span>
                             </div>
                             <div class="spec-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                </svg>
+                                <i class="fas fa-calendar-alt"></i>
                                 <span>{{ $vehicle->year }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="fas fa-palette"></i>
+                                <span>{{ $vehicle->color->colors }}</span>
                             </div>
                         </div>
 
                         <div class="vehicle-price-section">
-                            <div class="price-label">A partir de</div>
+                            <div class="price-label">
+                                <i class="fas fa-tag"></i> A partir de
+                            </div>
                             <div class="vehicle-price">R$ {{ number_format($vehicle->price, 2, ',', '.') }}</div>
                         </div>
 
                         <a href="{{ route('vehicle.show', $vehicle->id) }}" class="vehicle-btn">
-                            Ver Detalhes
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
+                            <i class="fas fa-eye"></i> Ver Detalhes
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
