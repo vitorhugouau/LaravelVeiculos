@@ -826,4 +826,19 @@ $vehicle->brand->name
    ```
 
 
+<img width="1901" height="919" alt="home" src="https://github.com/user-attachments/assets/29d27197-7a03-426d-8d4d-2f4b7b27efbf" />
+
+<img width="1902" height="915" alt="home - 2" src="https://github.com/user-attachments/assets/d8164463-07dd-4635-869a-c68a0a9d2ccb" />
+
+<img width="1902" height="912" alt="admin" src="https://github.com/user-attachments/assets/4ccf30ef-4e39-40aa-9e45-d53d82df13c4" />
+
+<img width="1898" height="913" alt="admin - 2" src="https://github.com/user-attachments/assets/aa2ba816-e16e-4571-837b-e4f7305e671c" />
+
+<img width="1901" height="908" alt="admin - 3" src="https://github.com/user-attachments/assets/14a0230f-c5ee-4430-bffa-8d7c4f6ce341" />
+
+<img width="1902" height="912" alt="veiculos" src="https://github.com/user-attachments/assets/e336fed1-74fa-4f69-bc31-999f406b9962" />
+
+
+
+
 
