@@ -63,7 +63,7 @@
                                             <form action="{{ route('admin.vehicles.destroy', $vehicle->id) }}" method="POST" class="inline-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn-danger" 
+                                                <button type="submit" class="btn-danger"
                                                         onclick="return confirm('Tem certeza que deseja excluir este veículo?')">
                                                     <i class="fas fa-trash"></i> Excluir
                                                 </button>
@@ -75,9 +75,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination-wrapper">
+                <!-- <div class="pagination-wrapper">
                     {{ $vehicles->links() }}
-                </div>
+                </div> -->
             @else
                 <div class="empty-state">
                     <i class="fas fa-car"></i>
