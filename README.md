@@ -92,9 +92,9 @@ Edite o arquivo `.env` e configure as credenciais do banco:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=autovendas
-DB_USERNAME=seu_usuario
-DB_PASSWORD=sua_senha
+DB_DATABASE=venda_veiculos
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
 ### 5. Execute as migrações
