@@ -825,28 +825,4 @@ $vehicle->brand->name
    php artisan migrate:fresh
    ```
 
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
-
----
-
-## 👨‍💻 Desenvolvido por
-
-[Seu Nome]
-
----
-
-## 🙏 Agradecimentos
-
-- Laravel Framework
-- Comunidade Laravel
-- Font Awesome
-- Google Fonts
-
----
-
-**Última atualização:** 2025
 
