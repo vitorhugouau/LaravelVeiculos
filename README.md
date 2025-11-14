@@ -127,7 +127,7 @@ npm run build
 php artisan serve
 ```
 
-O sistema estará disponível em: `http://localhost:8000`
+O sistema estará disponível em: `http://127.0.0.1:8000`
 
 ---
 
