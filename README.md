@@ -67,7 +67,7 @@ AutoVendas é um sistema web completo para gestão de veículos, permitindo:
 ### 1. Baixar o repositório
 
 ```bash
-baixar o repostitório https://github.com/vitorhugouau/LaravelVeiculos.git
+baixar o repostitório
 cd LaravelVeiculos
 ```
 
